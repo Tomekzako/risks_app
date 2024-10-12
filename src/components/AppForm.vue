@@ -1,12 +1,12 @@
 <template>
   <div class="riskform">
     <form @submit.prevent="submitForm" class="riskform__form">
-      <AppInput v-model="title" name="title" required />
-      <AppTextarea v-model="overview" name="overview" />
+      <AppInput v-model="riskData.title" name="title" required />
+      <AppTextarea v-model="riskData.overview" name="overview" />
       <AppTextarea
-        v-model="description"
+        v-model="riskData.description"
         name="description"
-        :maxLength="1000"
+        :maxLength="1200"
         :rows="10"
         required
       />
@@ -26,7 +26,7 @@
 <script setup lang="ts">
 import { useRiskStore } from '@/stores/risk';
 import { useRouter } from 'vue-router';
-import { ref, computed } from 'vue';
+import { ref, computed, watch, reactive } from 'vue';
 import AppTextarea from '@/components/AppTextarea.vue';
 import AppInput from '@/components/AppInput.vue';
 import AppButton from '@/components/AppButton.vue';
@@ -44,29 +44,37 @@ const emit = defineEmits<{
 const router = useRouter();
 const store = useRiskStore();
 
-const title = ref(props.risk?.title ?? '');
-const overview = ref(props.risk?.overview ?? '');
-const description = ref(props.risk?.description ?? '');
-const id = ref(props.risk?.id ?? Date.now());
+let riskData = reactive(
+  props.risk
+    ? { ...props.risk }
+    : {
+        title: '',
+        overview: '',
+        description: '',
+        id: Date.now().toString(),
+      }
+);
+
+const formIsValid = computed(() => {
+  return riskData.title && riskData.description;
+});
+
+watch(
+  () => props.risk,
+  () => {
+    if (props.risk) {
+      riskData = { ...props.risk };
+    }
+  }
+);
 
 function submitForm() {
-  const formData = {
-    id: id.value,
-    title: title.value,
-    overview: overview.value,
-    description: description.value,
-  } as Risk;
-
-  emit('submit', formData);
+  emit('submit', { ...riskData });
 }
 
 function cancelEdition() {
   props.type === 'add' ? router.push({ name: 'home' }) : router.back();
 }
-
-const formIsValid = computed(() => {
-  return title.value && description.value;
-});
 </script>
 
 <style scoped>
@@ -83,13 +91,19 @@ const formIsValid = computed(() => {
 .riskform__form {
   background: white;
   padding: 1.5rem;
-  border-radius: 4px;
+  border-radius: 0.25rem;
   display: flex;
   flex-direction: column;
-  width: 30rem;
+  width: 100%;
 }
 
 .riskform__button {
   margin-top: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .riskform__form {
+    width: 30rem;
+  }
 }
 </style>

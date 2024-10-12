@@ -40,7 +40,7 @@ defineProps<{
 <style scoped>
 .risk {
   padding: 1rem 1.5rem;
-  background: #fff;
+  background: var(--c-white);
   margin-top: 1rem;
   border-radius: 0.25rem;
   box-shadow: 2px 4px 6px rgba(0, 0, 0, 0);

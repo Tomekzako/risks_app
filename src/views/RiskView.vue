@@ -16,15 +16,19 @@
 import AppHeading from '@/components/AppHeading.vue';
 import { useRoute } from 'vue-router';
 import { useRiskStore } from '@/stores/risk';
-import type { Risk } from '@/types/risk';
+import { computed } from 'vue';
 
 const route = useRoute();
 const store = useRiskStore();
 
-const riskDetails = store.getRisk(Number(route.params.id)) as Risk;
+const riskDetails = computed(() => store.getRisk(route.params.id as string));
 </script>
 
 <style scoped>
+.riskview {
+  margin-top: 1rem;
+}
+
 .riskview__section {
   max-width: 50rem;
   margin: 0 auto 2rem;

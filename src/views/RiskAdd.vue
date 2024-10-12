@@ -15,8 +15,8 @@ import type { Risk } from '@/types/risk';
 const router = useRouter();
 const store = useRiskStore();
 
-function submitForm(riskData: Risk) {
-  store.createRisk(riskData);
-  router.push({ name: 'home' });
+async function submitForm(riskData: Risk) {
+  await store.addRisk(riskData);
+  await router.push({ name: 'home' });
 }
 </script>

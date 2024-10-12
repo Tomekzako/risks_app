@@ -36,7 +36,7 @@ const props = withDefaults(
     required?: boolean;
   }>(),
   {
-    maxLength: 300,
+    maxLength: 400,
     rows: 6,
   }
 );

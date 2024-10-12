@@ -5,7 +5,9 @@
       <i class="material-icons">add</i>
       Create Risk
     </AppButton>
-    <p v-if="!riskList">There are no security risks created.</p>
+    <p v-if="riskList.length === 0" class="no-results">
+      There are no security risks created
+    </p>
     <RiskItem v-for="(risk, i) in riskList" :key="i" :risk="risk" />
   </main>
 </template>
@@ -21,4 +23,9 @@ const router = useRouter();
 const { riskList } = useRiskStore();
 </script>
 
-<style scoped></style>
+<style scoped>
+.no-results {
+  margin-top: 2rem;
+  font-size: 1.5rem;
+}
+</style>

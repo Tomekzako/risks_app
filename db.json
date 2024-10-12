@@ -1,10 +1,34 @@
 {
   "risks": [
     {
-      "id": 1728653575062,
-      "title": "Broken Access Control",
+      "id": "1728653575062",
+      "title": "Broken Access Controls",
       "overview": "Moves up from the fifth position; 94% of applications were tested for some form of broken access control. The 34 Common Weakness Enumerations (CWEs) mapped to Broken Access Control had more occurrences in applications than any other category.",
       "description": "Moving up from the fifth position, 94% of applications were tested for some form of broken access control with the average incidence rate of 3.81%, and has the most occurrences in the contributed dataset with over 318k. Notable Common Weakness Enumerations (CWEs) included are CWE-200: Exposure of Sensitive Information to an Unauthorized Actor, CWE-201: Insertion of Sensitive Information Into Sent Data, and CWE-352: Cross-Site Request Forgery. Access control enforces policy such that users cannot act outside of their intended permissions. Failures typically lead to unauthorized information disclosure, modification, or destruction of all data or performing a business function outside the user's limits."
+    },
+    {
+      "id": "1728660200632",
+      "title": "Cryptographic Failures",
+      "overview": "Shifting up one position to #2, previously known as Sensitive Data Exposure, which is more of a broad symptom rather than a root cause, the focus is on failures related to cryptography (or lack thereof).",
+      "description": "The first thing is to determine the protection needs of data in transit and at rest. For example, passwords, credit card numbers, health records, personal information, and business secrets require extra protection, mainly if that data falls under privacy laws, e.g., EU's General Data Protection Regulation (GDPR), or regulations, e.g., financial data protection such as PCI Data Security Standard (PCI DSS).  For all such data:\n\nIs any data transmitted in clear text? This concerns protocols such as HTTP, SMTP, FTP also using TLS upgrades like STARTTLS. External internet traffic is hazardous. Verify all internal traffic, e.g., between load balancers, web servers, or back-end systems.\n\nAre any old or weak cryptographic algorithms or protocols used either by default or in older code?\n\nAre default crypto keys in use, weak crypto keys generated or re-used, or is proper key management or rotation missing? Are crypto keys checked into source code repositories?"
+    },
+    {
+      "id": "1728660288649",
+      "title": "Injection",
+      "overview": "Injection slides down to the third position. 94% of the applications were tested for some form of injection with a max incidence rate of 19%, an average incidence rate of 3%, and 274k occurrences. Notable Common Weakness Enumerations (CWEs) included are CWE-79: Cross-site Scripting",
+      "description": "Some of the more common injections are SQL, NoSQL, OS command, Object Relational Mapping (ORM), LDAP, and Expression Language (EL) or Object Graph Navigation Library (OGNL) injection. The concept is identical among all interpreters. Source code review is the best method of detecting if applications are vulnerable to injections. Automated testing of all parameters, headers, URL, cookies, JSON, SOAP, and XML data inputs is strongly encouraged. Organizations can include static (SAST), dynamic (DAST), and interactive (IAST) application security testing tools into the CI/CD pipeline to identify introduced injection flaws before production deployment."
+    },
+    {
+      "id": "1728660363334",
+      "title": "Insecure Design",
+      "overview": "A new category for 2021 focuses on risks related to design and architectural flaws, with a call for more use of threat modeling, secure design patterns, and reference architectures. As a community we need to move beyond \"shift-left\" in the coding space to pre-code activities that are critical for the principles of Secure by Design.",
+      "description": "Insecure design is a broad category representing different weaknesses, expressed as “missing or ineffective control design.” Insecure design is not the source for all other Top 10 risk categories. There is a difference between insecure design and insecure implementation. We differentiate between design flaws and implementation defects for a reason, they have different root causes and remediation. A secure design can still have implementation defects leading to vulnerabilities that may be exploited. An insecure design cannot be fixed by a perfect implementation as by definition, needed security controls were never created to defend against specific attacks. One of the factors that contribute to insecure design is the lack of business risk profiling inherent in the software or system being developed, and thus the failure to determine what level of security design is required."
+    },
+    {
+      "id": "1728660510508",
+      "title": "Security Misconfiguration",
+      "overview": "Moving up from #6 in the previous edition, 90% of applications were tested for some form of misconfiguration, with an average incidence rate of 4.%, and over 208k occurrences of a Common Weakness Enumeration (CWE) in this risk category. With more shifts into highly configurable software, it's not surprising to see this category move up. Notable CWEs included are CWE-16 Configuration and CWE-611 Im",
+      "description": "The application might be vulnerable if the application is:\n\nMissing appropriate security hardening across any part of the application stack or improperly configured permissions on cloud services.\n\nUnnecessary features are enabled or installed (e.g., unnecessary ports, services, pages, accounts, or privileges).\n\nDefault accounts and their passwords are still enabled and unchanged.\n\nError handling reveals stack traces or other overly informative error messages to users.\n\nFor upgraded systems, the latest security features are disabled or not configured securely.\n\nThe security settings in the application servers, application frameworks (e.g., Struts, Spring, ASP.NET), libraries, databases, etc., are not set to secure values.\n\nThe server does not send security headers or directives, or they are not set to secure values.\n\nThe software is out of date or vulnerable (see A06:2021-Vulnerable and Outdated Components)."
     }
   ]
 }

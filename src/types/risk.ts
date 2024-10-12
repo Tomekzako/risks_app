@@ -1,5 +1,5 @@
 export type Risk = {
-  id: number;
+  id: string;
   title: string;
   overview: string;
   description: string;

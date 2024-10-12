@@ -7,43 +7,71 @@ interface State {
 
 export const useRiskStore = defineStore('risk', {
   state: (): State => ({
-    riskList: [
-      {
-        id: 123,
-        title: 'Broken Access Control',
-        overview:
-          'moves up from the fifth position; 94% of applications were tested for some form of broken access control. The 34 Common Weakness Enumerations (CWEs) mapped to Broken Access Control had more occurrences in applications than any other category.',
-        description:
-          "Moving up from the fifth position, 94% of applications were tested for some form of broken access control with the average incidence rate of 3.81%, and has the most occurrences in the contributed dataset with over 318k. Notable Common Weakness Enumerations (CWEs) included are CWE-200: Exposure of Sensitive Information to an Unauthorized Actor, CWE-201: Insertion of Sensitive Information Into Sent Data, and CWE-352: Cross-Site Request Forgery. Access control enforces policy such that users cannot act outside of their intended permissions. Failures typically lead to unauthorized information disclosure, modification, or destruction of all data or performing a business function outside the user's limits.",
-      },
-      {
-        id: 234,
-        title: 'Broken Access Control',
-        overview:
-          'moves up from the fifth position; 94% of applications were tested for some form of broken access control. The 34 Common Weakness Enumerations (CWEs) mapped to Broken Access Control had more occurrences in applications than any other category.',
-        description:
-          "Moving up from the fifth position, 94% of applications were tested for some form of broken access control with the average incidence rate of 3.81%, and has the most occurrences in the contributed dataset with over 318k. Notable Common Weakness Enumerations (CWEs) included are CWE-200: Exposure of Sensitive Information to an Unauthorized Actor, CWE-201: Insertion of Sensitive Information Into Sent Data, and CWE-352: Cross-Site Request Forgery. Access control enforces policy such that users cannot act outside of their intended permissions. Failures typically lead to unauthorized information disclosure, modification, or destruction of all data or performing a business function outside the user's limits.",
-      },
-    ],
+    riskList: [],
   }),
   getters: {
-    getRisk: (state) => {
-      return (id: number) => state.riskList.find((risk) => risk.id === id);
+    getRisk: (state: State) => {
+      return (id: string) => state.riskList.find((risk) => risk.id === id);
     },
   },
   actions: {
-    createRisk(payload: Risk) {
-      this.riskList.unshift(payload);
+    // createRisk(payload: Risk) {
+    //   this.riskList.unshift(payload);
+    // },
+    // editRisk(payload: Risk) {
+    //   const findIndex = this.riskList.findIndex(
+    //     (risk) => risk.id === payload.id
+    //   );
+    //   this.riskList.splice(findIndex, 1, payload);
+    // },
+    // removeRisk(id: string) {
+    //   const findIndex = this.riskList.findIndex((risk) => risk.id === id);
+    //   this.riskList.splice(findIndex, 1);
+    // },
+    async fetchRisks() {
+      try {
+        const result = await fetch('http://localhost:3000/risks');
+        const data = await result.json();
+
+        this.riskList.splice(0, this.riskList.length, ...data);
+      } catch (e) {
+        console.error('Failed to log data. Try again later!');
+      }
     },
-    editRisk(payload: Risk) {
-      const findIndex = this.riskList.findIndex(
-        (risk) => risk.id === payload.id
-      );
-      this.riskList.splice(findIndex, 1, payload);
+
+    async addRisk(riskData: Risk) {
+      try {
+        await fetch('http://localhost:3000/risks', {
+          method: 'POST',
+          body: JSON.stringify({ ...riskData }),
+        });
+        await this.fetchRisks();
+      } catch (e) {
+        console.error('Something went wrong. Try again later!');
+      }
     },
-    removeRisk(id: number) {
-      const findIndex = this.riskList.findIndex((risk) => risk.id === id);
-      this.riskList.splice(findIndex, 1);
+
+    async editRisk(riskData: Risk) {
+      try {
+        await fetch(`http://localhost:3000/risks/${riskData.id}`, {
+          method: 'PUT',
+          body: JSON.stringify({ ...riskData }),
+        });
+        await this.fetchRisks();
+      } catch (e) {
+        console.error('Something went wrong. Try again later!');
+      }
+    },
+
+    async removeRisk(id: string) {
+      try {
+        await fetch(`http://localhost:3000/risks/${id}`, {
+          method: 'DELETE',
+        });
+        await this.fetchRisks();
+      } catch (e) {
+        console.error('Something went wrong. Try again later!');
+      }
     },
   },
 });

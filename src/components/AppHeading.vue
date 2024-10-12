@@ -9,8 +9,8 @@
   font-size: 1.5rem;
   line-height: 1.3;
   font-weight: 600;
-  color: #1a1a1a;
-  margin-bottom: 1rem;
+  color: var(--c-black);
+  margin: 1rem 0;
   text-align: center;
 }
 

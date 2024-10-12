@@ -33,15 +33,20 @@ import { RouterView } from 'vue-router';
 import { useRoute, useRouter } from 'vue-router';
 import { useRiskStore } from '@/stores/risk';
 import AppButton from './components/AppButton.vue';
+import { onMounted } from 'vue';
 
 const router = useRouter();
 const route = useRoute();
 const store = useRiskStore();
 
 function removeRisk() {
-  store.removeRisk(Number(route.params.id));
+  store.removeRisk(route.params.id as string);
   router.push({ name: 'home' });
 }
+
+onMounted(() => {
+  store.fetchRisks();
+});
 </script>
 
 <style scoped>

@@ -22,12 +22,12 @@ withDefaults(
 
 <style>
 .appButton {
-  color: #fff;
+  color: var(--c-white);
   padding: 0.5rem 1rem;
   letter-spacing: 0.3px;
   height: 2rem;
   border: 0;
-  border-radius: 4px;
+  border-radius: 0.25rem;
   font-weight: bold;
   font-size: 0.75rem;
   line-height: 1rem;
@@ -73,6 +73,6 @@ withDefaults(
 .appButton .material-icons {
   font-size: 0.75rem;
   font-weight: bold;
-  margin-right: 4px;
+  margin-right: 0.25rem;
 }
 </style>
